@@ -3,7 +3,7 @@
 
 const CONFIG = {
     // InstagramアカウントのURL（ここを変更してください）
-    INSTAGRAM_URL: 'https://www.instagram.com/kajiki.ftb/',
+    INSTAGRAM_URL: 'https://www.instagram.com/kajiki.ftb?igsh=MXh6Nmhja29rOXBnZg==',
     
     // リダイレクトまでの時間（秒）
     REDIRECT_DELAY: 0.2,

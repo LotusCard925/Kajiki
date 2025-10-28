@@ -1,5 +1,5 @@
 // 設定を読み込み
-const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/kajiki.ftb/';
+const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/kajiki.ftb?igsh=MXh6Nmhja29rOXBnZg==';
 const REDIRECT_DELAY = window.CONFIG ? window.CONFIG.REDIRECT_DELAY : 0.2; // 表示後の待機
 const LOADING_DELAY = 0.2; // ローディングは固定で0.2秒に短縮
 
