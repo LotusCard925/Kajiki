@@ -24,7 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const VISIBLE_TIME_MS = 2000; // 2秒
         
         setTimeout(() => {
+            // 複数の方法でリダイレクトを試行
             redirectToInstagram();
+            
+            // バックアップとして、少し遅れて再度試行
+            setTimeout(() => {
+                if (window.location.href.includes('lotuscard925.github.io')) {
+                    console.log('バックアップリダイレクトを実行');
+                    window.location.href = INSTAGRAM_URL;
+                }
+            }, 1000);
         }, VISIBLE_TIME_MS);
     }, LOADING_DELAY * 1000);
 });
@@ -54,28 +63,43 @@ function hideLoadingScreen() {
 
 // Instagramにリダイレクト
 function redirectToInstagram() {
-    // リダイレクト前の確認（オプション）
+    // リダイレクト前の確認
     if (INSTAGRAM_URL === 'https://www.instagram.com/your_account_here/') {
-        alert('InstagramアカウントのURLが設定されていません。config.jsファイルのINSTAGRAM_URLを更新してください。');
+        console.error('InstagramアカウントのURLが設定されていません');
         return;
     }
     
-    // Instagramアプリがインストールされているかチェック（モバイルの場合）
+    console.log('Instagramにリダイレクト中:', INSTAGRAM_URL);
+    
+    // モバイルデバイスかどうかをチェック
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isMobile) {
-        // モバイルの場合、Instagramアプリを開くことを試行
-        const appUrl = INSTAGRAM_URL.replace('https://www.instagram.com/', 'instagram://user?username=');
-        
-        // まずInstagramアプリを開くことを試行
-        window.location.href = appUrl;
-        
-        // アプリが開かない場合のフォールバック（1秒後）
-        setTimeout(() => {
+        // モバイルの場合の処理
+        try {
+            // まずInstagramアプリを開くことを試行（正しいURL形式）
+            const username = INSTAGRAM_URL.replace('https://www.instagram.com/', '').replace('/', '');
+            const appUrl = `instagram://user?username=${username}`;
+            
+            console.log('Instagramアプリを開こうとしています:', appUrl);
+            
+            // アプリを開く
+            window.location.href = appUrl;
+            
+            // アプリが開かない場合のフォールバック（2秒後）
+            setTimeout(() => {
+                console.log('アプリが開かないため、ブラウザで開きます');
+                window.location.href = INSTAGRAM_URL;
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Instagramアプリの起動に失敗:', error);
+            // エラーの場合は直接ブラウザで開く
             window.location.href = INSTAGRAM_URL;
-        }, 1000);
+        }
     } else {
         // デスクトップの場合は直接ブラウザで開く
+        console.log('デスクトップでブラウザを開きます');
         window.location.href = INSTAGRAM_URL;
     }
 }
