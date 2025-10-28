@@ -51,6 +51,9 @@ body {
 .loading-content p {
     font-size: 16px;
     font-weight: 300;
+    font-family: 'Times New Roman', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'HiraMinProN-W3', 'Noto Serif JP', serif;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* メインコンテンツ */
