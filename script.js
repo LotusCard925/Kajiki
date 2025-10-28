@@ -31,7 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 if (window.location.href.includes('lotuscard925.github.io')) {
                     console.log('バックアップリダイレクトを実行');
-                    window.location.href = INSTAGRAM_URL;
+                    // より確実な方法でリダイレクト
+                    window.open(INSTAGRAM_URL, '_blank');
+                    setTimeout(() => {
+                        window.location.href = INSTAGRAM_URL;
+                    }, 100);
                 }
             }, 1000);
         }, VISIBLE_TIME_MS);
@@ -77,20 +81,23 @@ function redirectToInstagram() {
     if (isMobile) {
         // モバイルの場合の処理
         try {
-            // まずInstagramアプリを開くことを試行（正しいURL形式）
-            const username = INSTAGRAM_URL.replace('https://www.instagram.com/', '').replace('/', '');
+            // ユーザー名を抽出（igshパラメータを除去）
+            const cleanUrl = INSTAGRAM_URL.split('?')[0]; // igshパラメータを除去
+            const username = cleanUrl.replace('https://www.instagram.com/', '').replace('/', '');
             const appUrl = `instagram://user?username=${username}`;
             
             console.log('Instagramアプリを開こうとしています:', appUrl);
+            console.log('ユーザー名:', username);
             
             // アプリを開く
             window.location.href = appUrl;
             
-            // アプリが開かない場合のフォールバック（2秒後）
+            // アプリが開かない場合のフォールバック（1.5秒後）
             setTimeout(() => {
                 console.log('アプリが開かないため、ブラウザで開きます');
+                // ブラウザでは元のURL（igshパラメータ付き）を使用
                 window.location.href = INSTAGRAM_URL;
-            }, 2000);
+            }, 1500);
             
         } catch (error) {
             console.error('Instagramアプリの起動に失敗:', error);
