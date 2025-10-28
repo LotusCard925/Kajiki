@@ -1,106 +1,150 @@
-// モバイルメニューの切り替え
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+// 設定を読み込み
+const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/your_account_here/';
+const REDIRECT_DELAY = window.CONFIG ? window.CONFIG.REDIRECT_DELAY : 3;
+const LOADING_DELAY = window.CONFIG ? window.CONFIG.LOADING_DELAY : 2;
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+// ページ読み込み時の処理
+document.addEventListener('DOMContentLoaded', function() {
+    // ローディング画面を表示
+    showLoadingScreen();
+    
+    // 設定された時間後にメインコンテンツを表示し、カウントダウンを開始
+    setTimeout(() => {
+        hideLoadingScreen();
+        startCountdown();
+    }, LOADING_DELAY * 1000);
 });
 
-// メニューリンクをクリックした時にメニューを閉じる
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
+// ローディング画面を表示
+function showLoadingScreen() {
+    const loading = document.getElementById('loading');
+    const mainContent = document.getElementById('main-content');
+    
+    loading.style.display = 'flex';
+    mainContent.style.display = 'none';
+}
 
-// スムーススクロール
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+// ローディング画面を非表示
+function hideLoadingScreen() {
+    const loading = document.getElementById('loading');
+    const mainContent = document.getElementById('main-content');
+    
+    loading.style.opacity = '0';
+    
+    setTimeout(() => {
+        loading.style.display = 'none';
+        mainContent.style.display = 'block';
+        mainContent.classList.add('fade-in');
+    }, 500);
+}
+
+// カウントダウンを開始
+function startCountdown() {
+    const countdownElement = document.getElementById('countdown');
+    let timeLeft = REDIRECT_DELAY;
+    
+    // カウントダウン表示を更新
+    const countdownInterval = setInterval(() => {
+        countdownElement.textContent = timeLeft;
+        timeLeft--;
+        
+        if (timeLeft < 0) {
+            clearInterval(countdownInterval);
+            redirectToInstagram();
         }
+    }, 1000);
+}
+
+// Instagramにリダイレクト
+function redirectToInstagram() {
+    // リダイレクト前の確認（オプション）
+    if (INSTAGRAM_URL === 'https://www.instagram.com/your_account_here/') {
+        alert('InstagramアカウントのURLが設定されていません。script.jsファイルのINSTAGRAM_URLを更新してください。');
+        return;
+    }
+    
+    // Instagramアプリがインストールされているかチェック（モバイルの場合）
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // モバイルの場合、Instagramアプリを開くことを試行
+        const appUrl = INSTAGRAM_URL.replace('https://www.instagram.com/', 'instagram://user?username=');
+        
+        // まずInstagramアプリを開くことを試行
+        window.location.href = appUrl;
+        
+        // アプリが開かない場合のフォールバック（3秒後）
+        setTimeout(() => {
+            window.location.href = INSTAGRAM_URL;
+        }, 3000);
+    } else {
+        // デスクトップの場合は直接ブラウザで開く
+        window.location.href = INSTAGRAM_URL;
+    }
+}
+
+// ユーザーが手動でInstagramに移動したい場合のボタン（オプション）
+function addManualRedirectButton() {
+    const redirectDiv = document.querySelector('.instagram-redirect');
+    const button = document.createElement('button');
+    button.textContent = '今すぐInstagramに移動';
+    button.className = 'manual-redirect-btn';
+    button.onclick = redirectToInstagram;
+    
+    // ボタンのスタイル
+    button.style.cssText = `
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: transform 0.2s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    `;
+    
+    // ホバー効果
+    button.addEventListener('mouseenter', () => {
+        button.style.transform = 'scale(1.05)';
     });
+    
+    button.addEventListener('mouseleave', () => {
+        button.style.transform = 'scale(1)';
+    });
+    
+    redirectDiv.appendChild(button);
+}
+
+// エラーハンドリング
+window.addEventListener('error', function(e) {
+    console.error('エラーが発生しました:', e.error);
 });
 
-// スクロール時のナビゲーションバーの背景変更
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.backdropFilter = 'blur(10px)';
-    } else {
-        navbar.style.background = '#fff';
-        navbar.style.backdropFilter = 'none';
+// ページの可視性が変わった時の処理（バックグラウンドから戻った時など）
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+        // ページが再び表示された時、必要に応じて処理を再開
+        console.log('ページが再表示されました');
     }
 });
 
-// フォーム送信の処理
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // フォームデータを取得
-        const formData = new FormData(this);
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const message = this.querySelector('textarea').value;
-        
-        // 簡単なバリデーション
-        if (!name || !email || !message) {
-            alert('すべてのフィールドを入力してください。');
-            return;
-        }
-        
-        // 送信成功のメッセージ（実際の送信処理はここに実装）
-        alert('お問い合わせありがとうございます。内容を確認次第、ご連絡いたします。');
-        this.reset();
-    });
+// タッチデバイス用の最適化
+if ('ontouchstart' in window) {
+    // タッチデバイス用の追加処理
+    document.body.style.touchAction = 'manipulation';
 }
 
-// CTAボタンのクリック処理
-const ctaButton = document.querySelector('.cta-button');
-if (ctaButton) {
-    ctaButton.addEventListener('click', () => {
-        document.querySelector('#about').scrollIntoView({
-            behavior: 'smooth'
-        });
+// パフォーマンス最適化
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+        // アイドル時間に実行する処理
+        console.log('ページの初期化が完了しました');
     });
+} else {
+    setTimeout(() => {
+        console.log('ページの初期化が完了しました');
+    }, 0);
 }
-
-// スクロールアニメーション
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// アニメーション対象の要素を監視
-document.querySelectorAll('.service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(card);
-});
-
-// ページ読み込み時のアニメーション
-window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
-});
-
-// 初期状態でbodyを非表示に設定
-document.body.style.opacity = '0';
-document.body.style.transition = 'opacity 0.5s ease';
