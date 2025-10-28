@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kajiki中継ページ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="nav-logo">Kajiki</h1>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">ホーム</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">について</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link">サービス</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">お問い合わせ</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <h2 class="hero-title">Kajiki中継ページへようこそ</h2>
+                <p class="hero-description">
+                    最新の技術とデザインで構築されたモダンなWebページです。
+                </p>
+                <button class="cta-button">詳細を見る</button>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>私たちについて</h2>
+                <p>
+                    Kajikiは、革新的なソリューションを提供するプラットフォームです。
+                    ユーザーエクスペリエンスを最優先に考え、常に最新の技術を活用しています。
+                </p>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2>サービス</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Web開発</h3>
+                        <p>モダンなWebアプリケーションの開発</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>デザイン</h3>
+                        <p>ユーザーフレンドリーなUI/UXデザイン</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>コンサルティング</h3>
+                        <p>技術的な課題解決のサポート</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>お問い合わせ</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="お名前" required>
+                    <input type="email" placeholder="メールアドレス" required>
+                    <textarea placeholder="メッセージ" rows="5" required></textarea>
+                    <button type="submit">送信</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kajiki. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
