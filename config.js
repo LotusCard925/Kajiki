@@ -9,7 +9,7 @@ const CONFIG = {
     REDIRECT_DELAY: 0.2,
     
     // ローディング画面の表示時間（秒）
-    LOADING_DELAY: 1.0,
+    LOADING_DELAY: 2.0,
     
     // サイトのタイトル
     SITE_TITLE: 'Kajiki中継ページ',

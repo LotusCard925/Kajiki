@@ -1,7 +1,7 @@
 // 設定を読み込み
 const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/kajiki.ftb/';
 const REDIRECT_DELAY = window.CONFIG ? window.CONFIG.REDIRECT_DELAY : 0.2;
-const LOADING_DELAY = window.CONFIG ? window.CONFIG.LOADING_DELAY : 1.0;
+const LOADING_DELAY = window.CONFIG ? window.CONFIG.LOADING_DELAY : 2.0;
 
 // デバッグ用：設定値をコンソールに出力
 console.log('設定値:', {
@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ローディング画面を表示
     showLoadingScreen();
     
-    // 設定された時間後にメインコンテンツを表示し、すぐにリダイレクト
+    // 2秒後にメインコンテンツを表示し、すぐにリダイレクト
     setTimeout(() => {
         hideLoadingScreen();
         // 少し遅延してからリダイレクト
         setTimeout(() => {
             redirectToInstagram();
         }, REDIRECT_DELAY * 1000);
-    }, LOADING_DELAY * 1000);
+    }, 2000); // 2秒にハードコード
 });
 
 // ローディング画面を表示
