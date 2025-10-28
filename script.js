@@ -1,17 +1,20 @@
 // 設定を読み込み
-const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/your_account_here/';
-const REDIRECT_DELAY = window.CONFIG ? window.CONFIG.REDIRECT_DELAY : 3;
-const LOADING_DELAY = window.CONFIG ? window.CONFIG.LOADING_DELAY : 2;
+const INSTAGRAM_URL = window.CONFIG ? window.CONFIG.INSTAGRAM_URL : 'https://www.instagram.com/kajiki.ftb/';
+const REDIRECT_DELAY = window.CONFIG ? window.CONFIG.REDIRECT_DELAY : 0.2;
+const LOADING_DELAY = window.CONFIG ? window.CONFIG.LOADING_DELAY : 0.2;
 
 // ページ読み込み時の処理
 document.addEventListener('DOMContentLoaded', function() {
     // ローディング画面を表示
     showLoadingScreen();
     
-    // 設定された時間後にメインコンテンツを表示し、カウントダウンを開始
+    // 設定された時間後にメインコンテンツを表示し、すぐにリダイレクト
     setTimeout(() => {
         hideLoadingScreen();
-        startCountdown();
+        // 少し遅延してからリダイレクト
+        setTimeout(() => {
+            redirectToInstagram();
+        }, REDIRECT_DELAY * 1000);
     }, LOADING_DELAY * 1000);
 });
 
@@ -33,33 +36,16 @@ function hideLoadingScreen() {
     
     setTimeout(() => {
         loading.style.display = 'none';
-        mainContent.style.display = 'block';
+        mainContent.style.display = 'flex';
         mainContent.classList.add('fade-in');
-    }, 500);
-}
-
-// カウントダウンを開始
-function startCountdown() {
-    const countdownElement = document.getElementById('countdown');
-    let timeLeft = REDIRECT_DELAY;
-    
-    // カウントダウン表示を更新
-    const countdownInterval = setInterval(() => {
-        countdownElement.textContent = timeLeft;
-        timeLeft--;
-        
-        if (timeLeft < 0) {
-            clearInterval(countdownInterval);
-            redirectToInstagram();
-        }
-    }, 1000);
+    }, 300);
 }
 
 // Instagramにリダイレクト
 function redirectToInstagram() {
     // リダイレクト前の確認（オプション）
     if (INSTAGRAM_URL === 'https://www.instagram.com/your_account_here/') {
-        alert('InstagramアカウントのURLが設定されていません。script.jsファイルのINSTAGRAM_URLを更新してください。');
+        alert('InstagramアカウントのURLが設定されていません。config.jsファイルのINSTAGRAM_URLを更新してください。');
         return;
     }
     
@@ -73,49 +59,14 @@ function redirectToInstagram() {
         // まずInstagramアプリを開くことを試行
         window.location.href = appUrl;
         
-        // アプリが開かない場合のフォールバック（3秒後）
+        // アプリが開かない場合のフォールバック（1秒後）
         setTimeout(() => {
             window.location.href = INSTAGRAM_URL;
-        }, 3000);
+        }, 1000);
     } else {
         // デスクトップの場合は直接ブラウザで開く
         window.location.href = INSTAGRAM_URL;
     }
-}
-
-// ユーザーが手動でInstagramに移動したい場合のボタン（オプション）
-function addManualRedirectButton() {
-    const redirectDiv = document.querySelector('.instagram-redirect');
-    const button = document.createElement('button');
-    button.textContent = '今すぐInstagramに移動';
-    button.className = 'manual-redirect-btn';
-    button.onclick = redirectToInstagram;
-    
-    // ボタンのスタイル
-    button.style.cssText = `
-        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 25px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-top: 15px;
-        transition: transform 0.2s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    `;
-    
-    // ホバー効果
-    button.addEventListener('mouseenter', () => {
-        button.style.transform = 'scale(1.05)';
-    });
-    
-    button.addEventListener('mouseleave', () => {
-        button.style.transform = 'scale(1)';
-    });
-    
-    redirectDiv.appendChild(button);
 }
 
 // エラーハンドリング

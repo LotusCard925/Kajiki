@@ -3,23 +3,23 @@
 
 const CONFIG = {
     // InstagramアカウントのURL（ここを変更してください）
-    INSTAGRAM_URL: 'https://www.instagram.com/your_account_here/',
+    INSTAGRAM_URL: 'https://www.instagram.com/kajiki.ftb/',
     
     // リダイレクトまでの時間（秒）
-    REDIRECT_DELAY: 3,
+    REDIRECT_DELAY: 0.2,
     
     // ローディング画面の表示時間（秒）
-    LOADING_DELAY: 2,
+    LOADING_DELAY: 0.2,
     
     // サイトのタイトル
     SITE_TITLE: 'Kajiki中継ページ',
     
     // ヒーローセクションのテキスト
-    HERO_TITLE: 'Kajikiへようこそ',
-    HERO_DESCRIPTION: '素晴らしいコンテンツをお届けします',
+    HERO_TITLE: '労働チュート',
+    HERO_DESCRIPTION: '',
     
     // リダイレクトメッセージ
-    REDIRECT_MESSAGE: 'Instagramに移動します...',
+    REDIRECT_MESSAGE: '',
     
     // ローディングメッセージ
     LOADING_MESSAGE: '読み込み中...'

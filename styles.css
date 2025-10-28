@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
 }
 
 .loading-content {
@@ -57,13 +57,16 @@ body {
 .main-content {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .mobile-container {
     min-height: 100vh;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
 }
 
@@ -94,167 +97,70 @@ body {
     z-index: -1;
 }
 
-/* ヘッダー */
-.mobile-header {
-    padding: 20px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.mobile-logo {
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* ヒーローセクション */
-.mobile-hero {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.hero-content {
-    max-width: 400px;
-    width: 100%;
-}
-
-.hero-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    line-height: 1.2;
-}
-
-.hero-description {
-    font-size: 18px;
-    font-weight: 300;
-    margin-bottom: 40px;
-    opacity: 0.9;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    line-height: 1.5;
-}
-
-/* Instagramリダイレクト */
-.instagram-redirect {
+/* 中央の透明な枠組み */
+.center-box {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border-radius: 20px;
-    padding: 30px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 40px 60px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
 }
 
-.redirect-text {
-    font-size: 16px;
-    margin-bottom: 20px;
-    font-weight: 400;
-}
-
-.countdown {
+/* メインテキスト */
+.main-text {
     font-size: 48px;
     font-weight: 700;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    animation: pulse 1s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-/* フッター */
-.mobile-footer {
-    padding: 20px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.mobile-footer p {
-    font-size: 14px;
-    opacity: 0.7;
-    font-weight: 300;
+    margin: 0;
+    letter-spacing: 2px;
 }
 
 /* レスポンシブデザイン */
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 28px;
+    .center-box {
+        padding: 30px 40px;
+        width: 90%;
+        max-width: 350px;
     }
     
-    .hero-description {
-        font-size: 16px;
-    }
-    
-    .mobile-logo {
-        font-size: 24px;
-    }
-    
-    .countdown {
-        font-size: 40px;
-    }
-    
-    .instagram-redirect {
-        padding: 25px 15px;
+    .main-text {
+        font-size: 36px;
+        letter-spacing: 1px;
     }
 }
 
 @media (max-width: 360px) {
-    .hero-title {
-        font-size: 24px;
+    .center-box {
+        padding: 25px 30px;
+        width: 95%;
+        max-width: 300px;
     }
     
-    .hero-description {
-        font-size: 14px;
-    }
-    
-    .countdown {
-        font-size: 36px;
+    .main-text {
+        font-size: 28px;
+        letter-spacing: 1px;
     }
 }
 
 /* 横画面対応 */
 @media (orientation: landscape) and (max-height: 500px) {
-    .mobile-hero {
-        padding: 20px;
+    .center-box {
+        padding: 20px 40px;
     }
     
-    .hero-title {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    
-    .hero-description {
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-    
-    .instagram-redirect {
-        padding: 20px 15px;
-    }
-    
-    .countdown {
+    .main-text {
         font-size: 32px;
     }
 }
 
 /* アニメーション */
 .fade-in {
-    animation: fadeIn 0.8s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -270,11 +176,11 @@ body {
 
 /* タッチデバイス用の最適化 */
 @media (hover: none) and (pointer: coarse) {
-    .instagram-redirect {
+    .center-box {
         transition: transform 0.2s ease;
     }
     
-    .instagram-redirect:active {
+    .center-box:active {
         transform: scale(0.98);
     }
 }
