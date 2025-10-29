@@ -84,13 +84,20 @@ function redirectToInstagram() {
             // ユーザー名を抽出（igshパラメータを除去）
             const cleanUrl = INSTAGRAM_URL.split('?')[0]; // igshパラメータを除去
             const username = cleanUrl.replace('https://www.instagram.com/', '').replace('/', '');
-            const appUrl = `instagram://user?username=${username}`;
             
-            console.log('Instagramアプリを開こうとしています:', appUrl);
+            console.log('Instagramアプリを開こうとしています');
             console.log('ユーザー名:', username);
             
-            // アプリを開く
-            window.location.href = appUrl;
+            // シンプルなアプリ用URL形式を使用
+            const appUrl = `instagram://user?username=${username}`;
+            
+            // アプリを開く（より確実な方法）
+            const link = document.createElement('a');
+            link.href = appUrl;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             
             // アプリが開かない場合のフォールバック（1.5秒後）
             setTimeout(() => {
